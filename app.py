@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 import plotly.express as px
 from utils.tickers_auto_suggession import search_ticker
+import os
 
 # -------------------- UI START --------------------
 st.title("Backtesting Engine (SMA Crossover)")
@@ -45,8 +46,8 @@ else:
 
 # -------------------- RUN BACKTEST --------------------
 if st.button("Run Backtest"):
-    url = "http://localhost:8000/backtest"
-    res = requests.get(url, params={"symbol": symbol})
+    BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000")
+    res = requests.get(f"{BACKEND_URL}/backtest", params={"symbol": symbol})
 
     if res.status_code == 200:
 
